@@ -1,6 +1,11 @@
+from modes import *
+import encode
+
 # step 1. data analysis
 
 # step 2. data encodation
+
+code = encode.encode(data, mode)
 
 # step 3. error correction encoding
 
