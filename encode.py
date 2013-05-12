@@ -19,3 +19,4 @@ def encode(data, mode):
     for group in groups:
         result += group
     return result
+
