@@ -1,4 +1,4 @@
-# define modes and corresponding indicator
+# define modes and corresponding indicators
 NUMERIC          = '0001'
 ALPHANUMERIC     = '0010'
 EIGHTBITBYTE     = '0100'
