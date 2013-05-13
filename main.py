@@ -1,11 +1,15 @@
 from modes import *
+from data import *
 import encode
 
 # step 1. data analysis
+if set(data).issubset(set(numeric)):
+    mode = NUMERIC
+elif set(data).issubset(set(alphanumeric)):
+    mode = ALPHANUMERIC
 
 # step 2. data encodation
-
-code = encode.encode(data, mode)
+code = encode.encode(data, version, mode)
 
 # step 3. error correction encoding
 
