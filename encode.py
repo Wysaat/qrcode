@@ -14,20 +14,20 @@ def encode(data, version, mode):
         else:
             last = '0' * (4 - len(bin(int(last))[2:])) + bin(int(last))[2:]
         groups.append(last)
-    # convert character count indicator to 10 bits for versions 1 to 9
-    if version in range(1, 10):
-	length = 10
-    # convert to 12 bits for versions 10 to 26
-    elif version in range(10, 27):
-	length = 12
-    # convert to 14 bits for versions 27 to 40
-    else:
-	length = 14
-    count = '0' * (length - len(bin(len(data))[2:])) + bin(len(data))[2:]
-    result = mode + count
-    for group in groups:
-        result += group
-    return result
+        # convert character count indicator to 10 bits for versions 1 to 9
+        if version in range(1, 10):
+	    length = 10
+        # convert to 12 bits for versions 10 to 26
+        elif version in range(10, 27):
+	    length = 12
+        # convert to 14 bits for versions 27 to 40
+        else:
+	    length = 14
+        count = '0' * (length - len(bin(len(data))[2:])) + bin(len(data))[2:]
+        result = mode + count
+        for group in groups:
+            result += group
+        return result
 
     elif mode == ALPHANUMERIC:
         values = [alphanumeric.index(aln) for aln in data]
