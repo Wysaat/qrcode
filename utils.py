@@ -38,3 +38,16 @@ def getbitstream(data, length, mode, groups):
 	result += group
     return result
 
+def getversion(data, mode):
+    """ a rough estimation of the version to use,
+        ensuring highest error correction level """
+    size = len(data)
+    
+    if mode == NUMERIC:
+	version = int(size / 19) + 1
+    elif mode == ALPHANUMERIC:
+	version = int(size / 10) + 1
+    elif mode == EIGHTBITBYTE:
+	version = int(size / 7) + 1
+    
+    return version

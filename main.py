@@ -1,6 +1,11 @@
+import sys
 from modes import *
 from data import *
 import encode
+import utils
+
+rawdata = sys.argv[1:]
+data = ' '.join(rawdata)
 
 # step 1. data analysis
 if set(data).issubset(set(numeric)):
@@ -9,6 +14,8 @@ elif set(data).issubset(set(alphanumeric)):
     mode = ALPHANUMERIC
 elif set(data).issubset(set(eightbitbyte)):
     mode = EIGHTBITBYTE
+
+version = utils.getversion(data, mode)
 
 # step 2. data encodation
 bitstream = encode.encode(data, version, mode)

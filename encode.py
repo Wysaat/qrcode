@@ -40,5 +40,5 @@ def encode(data, version, mode):
 	groups = [('0' * (8 - len(bin(value)[2:])) + bin(value)[2:]) \
 		  for value in values]
 
-    result = utils.getbitstream(data, length, mode, groups)
-    return result
+    bitstream = utils.getbitstream(data, length, mode, groups)
+    return bitstream 
