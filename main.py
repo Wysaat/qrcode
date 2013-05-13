@@ -7,9 +7,11 @@ if set(data).issubset(set(numeric)):
     mode = NUMERIC
 elif set(data).issubset(set(alphanumeric)):
     mode = ALPHANUMERIC
+elif set(data).issubset(set(eightbitbyte)):
+    mode = EIGHTBITBYTE
 
 # step 2. data encodation
-code = encode.encode(data, version, mode)
+bitstream = encode.encode(data, version, mode)
 
 # step 3. error correction encoding
 
