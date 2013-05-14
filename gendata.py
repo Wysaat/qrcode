@@ -1,11 +1,15 @@
 # generate data from tables in the iso/iec standard
 
 # get total data capacity, store in capdict
+# remainder bits of each version is in the last column of table 1
+# store remainder numbers in remnumdict
 with open("table1.txt") as f:
     lines = f.readlines()
     capdict = {}
+    remnumdict = {}
     for line in lines:
-	capdict[int(line.split()[0])] = int(line.split()[-1])
+	capdict[int(line.split()[0])] = int(line.split()[-2])
+	remnumdict[int(line.split()[0])] = int(line.split()[-1])
 
 # get input data number corresponding to version, error
 # correciton level
