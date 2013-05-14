@@ -41,4 +41,13 @@ def encode(data, version, mode):
 		  for value in values]
 
     bitstream = utils.getbitstream(data, length, mode, groups)
-    return bitstream 
+
+    bitstream += (8 - (len(bitstream) % 8)) * '0'
+    codewords = [bitstream[i:i+8] for i in range(0, len(bitstrea), 8)]
+    padding = capability - len(codewords)
+    if padding % 2 == 0:
+	codewords.extend(pcws * (padding / 2))
+    else:
+	codewords.extend(pcws * int(padding / 2))
+	codewords.append(pcws[0])
+    return codewords

@@ -2,6 +2,7 @@ import sys
 from modes import *
 from data import *
 import encode
+import messagegeneration
 import utils
 
 rawdata = sys.argv[1:]
@@ -18,11 +19,16 @@ elif set(data).issubset(set(eightbitbyte)):
 version = utils.getversion(data, mode)
 
 # step 2. data encodation
-bitstream = encode.encode(data, version, mode)
+codewords = encode.encode(data, version, mode)
 
 # step 3. error correction encoding
-
+ecc = genecc(codewords, version, ecl, necb)
 # step 4. codeword generation
+codewords = gencodewords(codewords, ecc)
+
+# final message generation
+
+
 
 # step 5. structure final message
 
