@@ -10,6 +10,7 @@ with open("table1.txt") as f:
     for line in lines:
 	capdict[int(line.split()[0])] = int(line.split()[-2])
 	remnumdict[int(line.split()[0])] = int(line.split()[-1])
+        matrixsizedict[int(line.split()[0])] = int(line.split()[2])
 
 # get input data number corresponding to version, error
 # correciton level

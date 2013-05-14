@@ -4,6 +4,7 @@ from data import *
 import encode
 import messagegeneration
 import utils
+import matrix
 
 rawdata = sys.argv[1:]
 data = ' '.join(rawdata)
@@ -24,15 +25,15 @@ codewords = encode.encode(data, version, mode)
 # step 3. error correction encoding
 ecc = genecc(codewords, version, ecl, necb)
 # step 4. codeword generation
-codewords = gencodewords(codewords, ecc)
 
 # final message generation
-
+finalmessage = 
 
 
 # step 5. structure final message
 
 # step 6. module placement in the matrix
+fmatrix = matrix.place()
 
 # step 7. masking
 
