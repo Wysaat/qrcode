@@ -1,4 +1,5 @@
 from gendata import *
+import utils
 # queit zone size
 sqz = 5
 
