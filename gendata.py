@@ -43,3 +43,13 @@ with open("tableE1.txt") as f:
 	line = [int(i) for i in line]
 	aligndict[line[0]] = line[2:]
 
+# version information
+with open("tableD1.txt") as f:
+    versioninfodict = {}
+    lines = f.readlines()
+    lines = [line.split() for line in lines]
+    lines = [line for line in lines if line != []]
+    for line in lines:
+        versioninfodict[int(line[0])] = line[1] + line[2] + line[3] \
+                                          + line[4] + line[5]
+

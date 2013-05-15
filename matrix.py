@@ -78,4 +78,36 @@ getmatrix(version, finalmessage, ecl, maskpattern):
 
     # 4. add format information
     formatinfo = utils.genformatinfo(ecl, maskpattern)
+    for j in range(6):
+        matrix[8, j] = formatinfo[j]
+    matrix[7, 8] = formatinfo[6]
+    for j in range(size - 8, size):
+        matrix[8, j] = formatinfo[j - size + 15]
+
+    for i in range(size - 1, size - 8, -1):
+        matrix[i, 8] = formatinfo[size - 1 - i]
+    matrix[size - 8, 8] = 1 # this position should always be dark
+    matrix[8, 8] = formatinfo[7]
+    matrix[7, 8] = formatinfo[8]
+    for i in range(6):
+        matrix[i, 8] = formatinfo[-(i + 1)]
+
+    # 5. add version information(for versions 7-40 only)
+    if version > 6:
+        versioninfo = versioninfodict[version]
+        # upper right
+        n = len(versioninfo) - 1
+        for i in range(6):
+            for j in range(size - 11, size - 8):
+                matrix[i][j] = versioninfo[n]
+                n -= 1
+
+        # lower left
+        n = len(versioninfo) - 1
+        for j in range(6):
+            for i in range(size - 11, size - 8):
+                matrix[i][j] = versioninfo[n]
+                n -= 1
+
+    # 6. add final message
 
