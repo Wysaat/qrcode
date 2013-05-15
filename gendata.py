@@ -7,6 +7,7 @@ with open("table1.txt") as f:
     lines = f.readlines()
     capdict = {}
     remnumdict = {}
+    matrixsizedict = {}
     for line in lines:
 	capdict[int(line.split()[0])] = int(line.split()[-2])
 	remnumdict[int(line.split()[0])] = int(line.split()[-1])
@@ -32,4 +33,13 @@ with open("tables7to11.txt") as f:
 	datanumdict[(i, 'H')] = lines[4 * (i - 1) + 2][1]
 	datanumdict[(i, 'M')] = lines[4 * (i - 1) + 3][1]
 	datanumdict[(i, 'L')] = lines[4 * (i - 1) + 4][1]
+
+# alignment patterns data
+with open("tableE1.txt") as f:
+    aligndict = {}
+    lines = f.readlines()
+    lines = [line.split() for line in lines]
+    for line in lines:
+	line = [int(i) for i in line]
+	aligndict[line[0]] = line[2:]
 

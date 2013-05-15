@@ -51,3 +51,18 @@ def getversion(data, mode):
 	version = int(size / 7) + 1
     
     return version
+
+def genformatinfo(ecl, maskpattern):
+    if ecl == 'L':   fbits = '01'
+    elif ecl == 'M': fbits = '00'
+    elif ecl == 'Q': fbits = '11'
+    else:            fbits = '10'
+    databits = fbits + maskpattern
+    # generator polynomial G(x)'s coefficients
+    genpol = [10, 8, 5, 4, 2, 1, 0]
+    bins = [int(i) for i in databits]
+    bins.reverse()
+    pol = [i for i in range(len(bins)) if bins[i] = 1]
+    raisedpol = [(i + 10) for i in pol]
+
+
