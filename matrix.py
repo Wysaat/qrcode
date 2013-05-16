@@ -111,4 +111,19 @@ getmatrix(version, finalmessage, ecl, maskpattern):
                 n -= 1
 
     # 6. add final message
-
+    while True:
+        if matrix[i][j] == -1:
+            matrix[i][j] = int(finalmessage[0])
+            finalmessage = finalmessage.lstrip(finalmessage[0])
+            if rank == 7 or rank == 5:
+                if matrix[i][j - 1] == -1:
+                    j -= 1
+                else:
+                    i -= 1
+            if rank == 6 or rank == 4:
+                if matrix[i - 1][j + 1] == -1:
+                    i -= 1
+                    j += 1
+                elif matrix[i - 1][j] == -1:
+                    i -= 1
+                else:

@@ -60,9 +60,20 @@ def genformatinfo(ecl, maskpattern):
     databits = fbits + maskpattern
     # generator polynomial G(x)'s coefficients
     genpol = [10, 8, 5, 4, 2, 1, 0]
-    bins = [int(i) for i in databits]
-    bins.reverse()
-    pol = [i for i in range(len(bins)) if bins[i] = 1]
-    raisedpol = [(i + 10) for i in pol]
+    genpol = '10100110111'
+    pol = databits + '0000000000'
+    pol = str(int(pol))
+    # I can't figure out how to calculate the error correction bit
+    # according to the ISO specific
+    # here I use the algorithm described here: 
+    # http://www.thonky.com/qr-code-tutorial/format-version-information/#the-error-correction-bits
+    while len(pol) > 10:
+        genpol = genpol + '0' * (len(pol) - len(genpol))
+        pol = bin(int(pol, 2) ^ int(genpol, 2))[2:]    
+    pol = '0' * (10 - len(pol)) + pol
+    infostr = databits + pol
 
-
+    # xor with mask: 101010000010010
+    mask = '101010000010010'
+    formatinfo = bin(int(infostr, 2) ^ int(mask, 2))[2:]
+    return formatinfo
