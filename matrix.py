@@ -111,19 +111,39 @@ getmatrix(version, finalmessage, ecl, maskpattern):
                 n -= 1
 
     # 6. add final message
+    # CAUTION!!! what x and y mean
+    x = size - 1
+    y = size - 1
+    lflag = 1
+    # vflag 0 means walk up
+    vflag = 0
+
     while True:
-        if matrix[i][j] == -1:
-            matrix[i][j] = int(finalmessage[0])
-            finalmessage = finalmessage.lstrip(finalmessage[0])
-            if rank == 7 or rank == 5:
-                if matrix[i][j - 1] == -1:
-                    j -= 1
-                else:
-                    i -= 1
-            if rank == 6 or rank == 4:
-                if matrix[i - 1][j + 1] == -1:
-                    i -= 1
-                    j += 1
-                elif matrix[i - 1][j] == -1:
-                    i -= 1
-                else:
+	# walk left is seldom a problem, don't it consider at the moment
+	if lflag == 1:
+	    y -= 1
+	    lflag = 0
+	# try to walk vertically when lflag == 0
+        else:
+	    while vflag == 0: # try to walk up
+		if x == 0:
+		    vflag == 1 # again don't consider the problem now
+		    y -= 1
+		    lflag == 1
+		if matrix[x - 1][y + 1] == -1: # when lucky
+		    x -= 1
+		    y += 1
+		    lflag = 1
+		    break
+		elif matrix[x - 1][y] == -1:
+		    x -= 1
+		    break
+	    while 
+
+
+    # 7. masking
+    # funciton patterns include finder patterns, separators, timing
+    # patterns and alignment patterns, function patterns are not masked
+    # format information and version information are not masked
+    # that is, only mask finalmessage
+
