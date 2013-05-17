@@ -1,0 +1,2 @@
+
+def geneccodewords(codewords):

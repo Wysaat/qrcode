@@ -2,7 +2,6 @@ from copy import deepcopy
 
 def mask(matrix):
     # in the unmasked matrix, -2 means 0, -1 means 1
-    maskingscores = []
     matrixes = []
     size = len(matrix)
     matrixes.append(domask(matrix, '(((i + j) % 2) == 0)'))
@@ -14,6 +13,8 @@ def mask(matrix):
     matrixes.append(domask(matrix, '(((((i * j) % 2) + ((i * j) % 3)) % 2) == 0)'))
     matrixes.append(domask(matrix, '(((((i * j) % 3) + ((i + j) % 2)) % 2) == 0)'))
     scores = [scoremasking(matrix) for matrix in matrixes]
+    ind = scores.index(max(scores))
+    return matrixes[ind]
 
 
 def domask(matrix, condition):
@@ -28,8 +29,6 @@ def domask(matrix, condition):
 		nmatrix[i][j] = 0
     return nmatrix
 
-def scoremasking(matrix):
-    # feature 1
 def scorefeature1(matrix):
     score = 0
     for i in range(len(matrix)):

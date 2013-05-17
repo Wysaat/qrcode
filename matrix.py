@@ -1,5 +1,6 @@
 from gendata import *
 import utils
+import mask
 # queit zone size
 sqz = 5
 
@@ -142,8 +143,5 @@ getmatrix(version, finalmessage, ecl, maskpattern):
 
 
     # 7. masking
-    # funciton patterns include finder patterns, separators, timing
-    # patterns and alignment patterns, function patterns are not masked
-    # format information and version information are not masked
-    # that is, only mask finalmessage
-
+    matrix = mask.mask(matrix)
+    return matrix

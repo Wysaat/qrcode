@@ -77,3 +77,4 @@ def genformatinfo(ecl, maskpattern):
     mask = '101010000010010'
     formatinfo = bin(int(infostr, 2) ^ int(mask, 2))[2:]
     return formatinfo
+

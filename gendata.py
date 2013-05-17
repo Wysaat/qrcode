@@ -53,3 +53,19 @@ with open("tableD1.txt") as f:
         versioninfodict[int(line[0])] = line[1] + line[2] + line[3] \
                                           + line[4] + line[5]
 
+# error correction codewords data
+with open("thonky1.txt") as f:
+    lines = f.readlines()
+    lines = [line.split('(')[0] for line in lines]
+    lines = [line.split() for line in lines]
+    lines = [line for line in lines if len(line) > 0]
+    for line in lines:
+        totalcodewords = int(line[1])
+        # error correction codewords per block
+        eccwpb = int(line[2])
+        if len(line) == 5:
+            groupn = 1
+        else:
+            groupn = 2
+        
+        
