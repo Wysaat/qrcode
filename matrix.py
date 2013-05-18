@@ -114,10 +114,37 @@ getmatrix(version, finalmessage, ecl, maskpattern):
     # 6. add final message
     # CAUTION!!! what x and y mean
     x = size - 1
-    y = size - 1
+    y = size - 1    
+
     lflag = 1
     # vflag 0 means walk up
     vflag = 0
+
+    while True:
+        if lflag == 0 and vflag == 0:
+            if x == 0:
+                next = matrix[x][y - 1]
+                position = (x, y - 1)
+            else:
+                next = matrix[x - 1][y + 1]
+                position = (x - 1, y + 1)
+        if lflag == 0 and vflag == 1:
+            if x == size - 1:
+                next = matrix[x][y - 1]
+                position = (x, y - 1)
+            else:
+                next = matrix[x + 1][y + 1]
+                position = (x + 1, y + 1)
+        if lflag == 1:
+            next = matrix[x][y - 1]
+            position = (x, y - 1)
+
+        while next >= 0:
+            next, position = findnext(position)
+
+
+
+
 
     while True:
 	# walk left is seldom a problem, don't it consider at the moment
