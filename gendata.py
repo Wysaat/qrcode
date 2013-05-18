@@ -21,6 +21,7 @@ with open("tables7to11.txt") as f:
     datanumdict = {}
     lines = [line.split() for line in lines]
     lines = [line for line in lines if line != []]
+    newlines = []
     for line in lines:
 	if len(line) > 1:
 	    if line[0].isdigit():
@@ -29,10 +30,10 @@ with open("tables7to11.txt") as f:
 	        newlines.append(line)
     lines = newlines
     for i in range(1, 41):
-	datanumdict[(i, 'Q')] = lines[4 * (i - 1) + 1][1]
-	datanumdict[(i, 'H')] = lines[4 * (i - 1) + 2][1]
-	datanumdict[(i, 'M')] = lines[4 * (i - 1) + 3][1]
-	datanumdict[(i, 'L')] = lines[4 * (i - 1) + 4][1]
+	datanumdict[(i, 'Q')] = int(lines[4 * (i - 1) + 0][1])
+	datanumdict[(i, 'H')] = int(lines[4 * (i - 1) + 1][1])
+	datanumdict[(i, 'M')] = int(lines[4 * (i - 1) + 2][1])
+	datanumdict[(i, 'L')] = int(lines[4 * (i - 1) + 3][1])
 
 # alignment patterns data
 with open("tableE1.txt") as f:
@@ -55,17 +56,23 @@ with open("tableD1.txt") as f:
 
 # error correction codewords data
 with open("thonky1.txt") as f:
+    diceccw = {}
     lines = f.readlines()
     lines = [line.split('(')[0] for line in lines]
     lines = [line.split() for line in lines]
     lines = [line for line in lines if len(line) > 0]
     for line in lines:
-        totalcodewords = int(line[1])
-        # error correction codewords per block
-        eccwpb = int(line[2])
-        if len(line) == 5:
-            groupn = 1
-        else:
-            groupn = 2
-        
-        
+	data = [int(i) for i in line[1:]]
+	diceccw[line[0]] = data
+
+with open('thonky2.txt') as f:
+    exptoint = {}
+    inttoexp = {}
+    lines = f.readlines()
+    lines = [line.split() for line in lines]
+    for line in lines:
+	exptoint[int(line[0])] = int(line[1])
+    for line in lines[1:]:
+	inttoexp[int(line[2])] = int(line[3])
+
+

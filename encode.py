@@ -1,8 +1,9 @@
 from modes import *
 from data import *
+from gendata import *
 import utils
 
-def encode(data, version, mode):
+def encode(data, version, mode, ecl):
     # determine the number of bits in character count indicator
     length = utils.getcountbits(version, mode)
 
@@ -43,8 +44,9 @@ def encode(data, version, mode):
     bitstream = utils.getbitstream(data, length, mode, groups)
 
     bitstream += (8 - (len(bitstream) % 8)) * '0'
-    codewords = [bitstream[i:i+8] for i in range(0, len(bitstrea), 8)]
+    codewords = [bitstream[i:i+8] for i in range(0, len(bitstream), 8)]
     # capability defined in data
+    capability = diceccw[str(version) + '-' + ecl][0]
     padding = capability - len(codewords)
     if padding % 2 == 0:
 	codewords.extend(pcws * (padding / 2))
