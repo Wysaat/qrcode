@@ -17,7 +17,7 @@ def gengenpol(length):
         p2[1] += 1
     return p1
 
-def geneccodewords(codewords, version, ecl):
+def genfinalmessage(codewords, version, ecl):
     key = str(version) + '-' + ecl
     data = diceccw[key]
     eccs = []
@@ -32,8 +32,7 @@ def geneccodewords(codewords, version, ecl):
 		base + (i + 1) * data[5]])
     for codewords in lcodewords:
         mespol = [int(cw, 2) for cw in codewords]
-	times = len(mespol)
-	for i in range(times):
+	while True:
 	    # step 1. multiply the generator polynomial by the lead term
 	    # of the xor result from the previous step
 	    lead = inttoexp[mespol[0]]
@@ -48,9 +47,29 @@ def geneccodewords(codewords, version, ecl):
 	    # step 2. xor the result with the last result
             mespol = [i[0] ^ i[1] for i in zip(result, mespol)]
 	    # drop leading 0 term
-	    mespol = mespol[1:]
-	    print mespol
+	    while mespol[0] == 0:
+	        mespol = mespol[1:]
+	    if len(mespol) == data[1]:
+		break
 	ewords = ['0' * (8 - len(bin(i)[2:])) + bin(i)[2:] 
 		for i in mespol]
 	eccs.append(ewords)
-    return eccs
+    finalmessage = []
+    pos = 0
+    while True:
+        for codewords in lcodewords:
+	    if pos < len(codewords):
+	        finalmessage.append(codewords[pos])
+	pos += 1
+	if pos == len(lcodewords[-1]):
+	    break
+    pos = 0
+    while True:
+	for ewords in eccs:
+	    finalmessage.append(ewords[pos])
+	pos += 1
+	if pos == len(eccs[-1]):
+	    break
+    finalmessage = [int(i) for word in finalmessage for i in word]
+    return finalmessage
+

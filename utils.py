@@ -78,3 +78,34 @@ def genformatinfo(ecl, maskpattern):
     formatinfo = bin(int(infostr, 2) ^ int(mask, 2))[2:]
     return formatinfo
 
+def findnext(matrix, position, lflag, vflag):
+    x, y = position
+    if lflag == 0 and vflag == 0:
+        if x == 0:
+            next = matrix[x][y - 1]
+            position = (x, y - 1)
+            lflag = 1
+	    vflag = 1
+        else:
+            next = matrix[x - 1][y + 1]
+            position = (x - 1, y + 1)
+            lflag = 1
+    if lflag == 0 and vflag == 1:
+        if x == size - 1:
+            next = matrix[x][y - 1]
+            position = (x, y - 1)
+	    lflag = 1
+       	    vflag = 0
+        else:
+            next = matrix[x + 1][y + 1]
+            position = (x + 1, y + 1)
+	    lflag = 1
+    if lflag == 1:
+        next = matrix[x][y - 1]
+        position = (x, y - 1)
+	lflag = 0
+    return next, position, lflag, vflag
+
+
+
+

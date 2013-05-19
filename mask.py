@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 def mask(matrix):
-    # in the unmasked matrix, -2 means 0, -1 means 1
+    # in the unmasked matrix, 2 means 0, 3 means 1
     matrixes = []
     size = len(matrix)
     matrixes.append(domask(matrix, '(((i + j) % 2) == 0)'))
@@ -14,18 +14,19 @@ def mask(matrix):
     matrixes.append(domask(matrix, '(((((i * j) % 3) + ((i + j) % 2)) % 2) == 0)'))
     scores = [scoremasking(matrix) for matrix in matrixes]
     ind = scores.index(max(scores))
-    return matrixes[ind]
+    maskpattern = '0' * (3 - len(bin(ind)[2:])) + bin(ind)[2:]
+    return matrixes[ind], maskpattern
 
 
 def domask(matrix, condition):
     nmatrix = deepcopy(matrix)
     for i in range(len(nmatrix)):
 	for j in range(len(nmatrix)):
-	    if nmatrix[i][j] == -2 and eval(condition):
+	    if nmatrix[i][j] == 2 and eval(condition):
 		nmatrix[i][j] = 1
-	    elif nmatrix[i][j] == -1 and not eval(condition):
+	    elif nmatrix[i][j] == 3 and not eval(condition):
 		nmatrix[i][j] = 1
-	    elif nmatrix[i][j] < 0:
+	    elif nmatrix[i][j] > 1:
 		nmatrix[i][j] = 0
     return nmatrix
 
@@ -48,7 +49,7 @@ def scorefeature2(matrix):
 	    m = n = 1
 	    color = matrix[i, j]
 	    while True:
-		if i = len(matrix) - 1:
+		if i == len(matrix) - 1:
 		    break
 	        for y in range(n):
 		    if matrix[i + 1][j + y] != color:
@@ -56,7 +57,7 @@ def scorefeature2(matrix):
 	        m += 1
 		i += 1
 	    while True:
-		if j = len(matrix) -1:
+		if j == len(matrix) -1:
 		    break
 		for x in range(m):
 		    if matrix[i - x][j + 1] != color:

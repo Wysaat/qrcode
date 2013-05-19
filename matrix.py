@@ -5,11 +5,11 @@ import mask
 sqz = 5
 
 # matrix made up of 
-getmatrix(version, finalmessage, ecl, maskpattern):
+def getmatrix(version, finalmessage, ecl):
     size = matrixsizedict[version]
     remainderbits = remnumdict[version]
-    matrix = [[-1  for i in range(size + sqz * 2)]
-	    for j in range(size +  sqz * 2)]
+    matrix = [[-1  for i in range(size)]
+	    for j in range(size)]
 
     # 1. add finder pattern and separators
     # upper left
@@ -37,8 +37,7 @@ getmatrix(version, finalmessage, ecl, maskpattern):
 	for j in range(1, 6):
 	    matrix[i][j] = 0
     for i in range(size - 5, size - 2):
-	for j in range(2, 5):
-	    matrix[i][j] = 1
+	for j in range(2, 5): matrix[i][j] = 1
 
     # lower left
     for i in range(8):
@@ -78,25 +77,27 @@ getmatrix(version, finalmessage, ecl, maskpattern):
 			    matrix[i][j] = 0
 		    matrix[centx][centy] = 1
 
-    # 4. add format information
-    formatinfo = utils.genformatinfo(ecl, maskpattern)
+    # 4. reserve place of formation fomation 
+    formatinfo = utils.genformatinfo(ecl, '000')
+    formatinfo = [int(i) for i in formatinfo]
     for j in range(6):
-        matrix[8, j] = formatinfo[j]
-    matrix[7, 8] = formatinfo[6]
+        matrix[8][j] = formatinfo[j]
+    matrix[7][8] = formatinfo[6]
     for j in range(size - 8, size):
-        matrix[8, j] = formatinfo[j - size + 15]
+        matrix[8][j] = formatinfo[j - size + 15]
 
     for i in range(size - 1, size - 8, -1):
-        matrix[i, 8] = formatinfo[size - 1 - i]
-    matrix[size - 8, 8] = 1 # this position should always be dark
-    matrix[8, 8] = formatinfo[7]
-    matrix[7, 8] = formatinfo[8]
+        matrix[i][8] = formatinfo[size - 1 - i]
+    matrix[size - 8][8] = 1 # this position should always be dark
+    matrix[8][8] = formatinfo[7]
+    matrix[7][8] = formatinfo[8]
     for i in range(6):
-        matrix[i, 8] = formatinfo[-(i + 1)]
+        matrix[i][8] = formatinfo[-(i + 1)]
 
-    # 5. add version information(for versions 7-40 only)
+   # 5. add version information(for versions 7-40 only)
     if version > 6:
         versioninfo = versioninfodict[version]
+	versioninfo = [int(i) for i in versioninfo]
         # upper right
         n = len(versioninfo) - 1
         for i in range(6):
@@ -119,56 +120,38 @@ getmatrix(version, finalmessage, ecl, maskpattern):
     lflag = 1
     # vflag 0 means walk up
     vflag = 0
+    position = (x, y)
+    k = 0
 
-    while True:
-        if lflag == 0 and vflag == 0:
-            if x == 0:
-                next = matrix[x][y - 1]
-                position = (x, y - 1)
-            else:
-                next = matrix[x - 1][y + 1]
-                position = (x - 1, y + 1)
-        if lflag == 0 and vflag == 1:
-            if x == size - 1:
-                next = matrix[x][y - 1]
-                position = (x, y - 1)
-            else:
-                next = matrix[x + 1][y + 1]
-                position = (x + 1, y + 1)
-        if lflag == 1:
-            next = matrix[x][y - 1]
-            position = (x, y - 1)
-
-        while next >= 0:
-            next, position = findnext(position)
-
-
-
-
-
-    while True:
-	# walk left is seldom a problem, don't it consider at the moment
-	if lflag == 1:
-	    y -= 1
-	    lflag = 0
-	# try to walk vertically when lflag == 0
+    while k < len(finalmessage) - 1:
+        while True:
+	    next, position, lflag, vflag = utils.findnext(matrix, position, lflag, vflag)
+	    if next < 0:
+	        break
+        if finalmessage[k] == 0:
+	    matrix[x][y] == 2 
         else:
-	    while vflag == 0: # try to walk up
-		if x == 0:
-		    vflag == 1 # again don't consider the problem now
-		    y -= 1
-		    lflag == 1
-		if matrix[x - 1][y + 1] == -1: # when lucky
-		    x -= 1
-		    y += 1
-		    lflag = 1
-		    break
-		elif matrix[x - 1][y] == -1:
-		    x -= 1
-		    break
-	    while 
-
+	    matrix[x][y] == 3
+        k += 1
 
     # 7. masking
-    matrix = mask.mask(matrix)
+    matrix, maskpattern = mask.mask(matrix)
+
+    # 4. add format information
+    formatinfo = utils.genformatinfo(ecl, maskpattern)
+    formatinfo = [int(i) for i in formatinfo]
+    for j in range(6):
+        matrix[8][j] = formatinfo[j]
+    matrix[7][8] = formatinfo[6]
+    for j in range(size - 8, size):
+        matrix[8][j] = formatinfo[j - size + 15]
+
+    for i in range(size - 1, size - 8, -1):
+        matrix[i][8] = formatinfo[size - 1 - i]
+    matrix[size - 8][8] = 1 # this position should always be dark
+    matrix[8][8] = formatinfo[7]
+    matrix[7][8] = formatinfo[8]
+    for i in range(6):
+        matrix[i][8] = formatinfo[-(i + 1)]
+
     return matrix
