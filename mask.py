@@ -33,7 +33,7 @@ def domask(matrix, condition):
 def scorefeature1(matrix):
     score = 0
     for i in range(len(matrix)):
-	string = ''.join(matrix[i])
+	string = ''.join(str(matrix[i]))
 	ones = [i for i in string.split('0') if len(i) > 5]
 	zeros = [i for i in string.split('1') if len(i) > 5]
 	for one in ones:
@@ -47,7 +47,7 @@ def scorefeature2(matrix):
     for i in range(len(matrix)):
 	for j in range(len(matrix)):
 	    m = n = 1
-	    color = matrix[i, j]
+	    color = matrix[i][j]
 	    while True:
 		if i == len(matrix) - 1:
 		    break
@@ -70,12 +70,13 @@ def scorefeature2(matrix):
 def scorefeature3(matrix):
     score = 0
     for i in range(len(matrix)):
-	string = ''.join(matrix[i])
+	string = ''.join(str(matrix[i]))
 	if '1011101' in string:
 	    score += 40
     return score
 
 def scorefeature4(matrix):
+    dark = 0
     for i in range(len(matrix)):
 	for j in range(len(matrix)):
 	    if matrix[i][j] == 1:

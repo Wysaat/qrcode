@@ -2,11 +2,15 @@ import sys
 from modes import *
 from data import *
 import encode
-import messagegeneration
 import utils
 import matrix
+import errorcode
 
-rawdata = sys.argv[1:]
+if len(sys.argv) != 3:
+    print "usage: main data_to_encode error_correction_level"
+    sys.exit(0)
+rawdata = sys.argv[1]
+ecl = sys.argv[2]
 data = ' '.join(rawdata)
 
 # step 1. data analysis
@@ -19,22 +23,8 @@ elif set(data).issubset(set(eightbitbyte)):
 
 version = utils.getversion(data, mode)
 
-# step 2. data encodation
-codewords = encode.encode(data, version, mode)
+codewords = encode.encode(data, version, mode, ecl)
 
-# step 3. error correction encoding
-ecc = genecc(codewords, version, ecl, necb)
-# step 4. codeword generation
+finalmessage = errorcode.genfinalmessage(codewords, version, ecl)
 
-# final message generation
-finalmessage = 
-
-
-# step 5. structure final message
-
-# step 6. module placement in the matrix
-fmatrix = matrix.place()
-
-# step 7. masking
-
-# step 8. format and version information
+fmatrix = matrix.getmatrix(version, finalmessage, ecl)

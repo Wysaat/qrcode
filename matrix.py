@@ -123,16 +123,22 @@ def getmatrix(version, finalmessage, ecl):
     position = (x, y)
     k = 0
 
-    while k < len(finalmessage) - 1:
+    while k < len(finalmessage):
         while True:
-	    next, position, lflag, vflag = utils.findnext(matrix, position, lflag, vflag)
+	    next, position, lflag, vflag = utils.findnext(matrix, position, lflag, vflag, size)
 	    if next < 0:
 	        break
+	x, y = position
         if finalmessage[k] == 0:
-	    matrix[x][y] == 2 
+	    matrix[x][y] = 2 
         else:
-	    matrix[x][y] == 3
+	    matrix[x][y] = 3
         k += 1
+
+    for i in range(size):
+	for j in range(size):
+	    if matrix[i][j] == -1:
+		matrix[i][j] = 0
 
     # 7. masking
     matrix, maskpattern = mask.mask(matrix)
