@@ -68,8 +68,8 @@ def genformatinfo(ecl, maskpattern):
     # here I use the algorithm described here: 
     # http://www.thonky.com/qr-code-tutorial/format-version-information/#the-error-correction-bits
     while len(pol) > 10:
-        genpol = genpol + '0' * (len(pol) - len(genpol))
-        pol = bin(int(pol, 2) ^ int(genpol, 2))[2:]    
+        t = genpol + '0' * (len(pol) - len(genpol))
+        pol = bin(int(pol, 2) ^ int(t, 2))[2:]    
     pol = '0' * (10 - len(pol)) + pol
     infostr = databits + pol
 

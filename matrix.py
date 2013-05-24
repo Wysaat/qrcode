@@ -94,7 +94,7 @@ def getmatrix(version, finalmessage, ecl):
     for i in range(6):
         matrix[i][8] = formatinfo[-(i + 1)]
 
-   # 5. add version information(for versions 7-40 only)
+    # 5. add version information(for versions 7-40 only)
     if version > 6:
         versioninfo = versioninfodict[version]
 	versioninfo = [int(i) for i in versioninfo]
