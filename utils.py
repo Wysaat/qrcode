@@ -76,6 +76,7 @@ def genformatinfo(ecl, maskpattern):
     # xor with mask: 101010000010010
     mask = '101010000010010'
     formatinfo = bin(int(infostr, 2) ^ int(mask, 2))[2:]
+    formatinfo = '0' * (15 - len(formatinfo)) + formatinfo
     return formatinfo
 
 def findnext(matrix, position, lflag, vflag, size):

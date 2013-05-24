@@ -79,6 +79,7 @@ def getmatrix(version, finalmessage, ecl):
 
     # 4. reserve place of formation fomation 
     formatinfo = utils.genformatinfo(ecl, '000')
+    print len(formatinfo)
     formatinfo = [int(i) for i in formatinfo]
     for j in range(6):
         matrix[8][j] = formatinfo[j]
